@@ -1,0 +1,12 @@
+# Don't commit secrets :3
+secrets.tfvars
+secrets.env
+
+# Terraform stuff
+.terraform/
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
