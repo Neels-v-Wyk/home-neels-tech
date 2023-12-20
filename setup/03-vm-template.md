@@ -8,7 +8,7 @@ These commands can really just be all ran on one of the nodes in order to create
 ```bash
 cd /tmp/
 wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
-apt update -y && sudo apt install libguestfs-tools -y
+apt update -y && apt install libguestfs-tools -y
 virt-customize -a noble-server-cloudimg-amd64.img --install qemu-guest-agent
 qm create 9000 --name "ubuntu-2404-cloudinit-template" --memory 4096 --cores 2 --net0 virtio,bridge=vmbr0
 qm importdisk 9000 noble-server-cloudimg-amd64.img server-zfs-storage
