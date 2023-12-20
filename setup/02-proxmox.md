@@ -49,8 +49,12 @@ These servers come with windows installed, which we won't be using.
 4. Create a cluster on your favorite node and join the cluster from the two other nodes
 5. Set up ZFS with all the defaults, make sure the pool name is consistent accross all three nodes
 6. Create a shared ZFS storage for all the nodes from the cluster management tab
-7. Create an SDN zone (simple), vnet and subnet in order to allow network communication between these nodes.
-	1. Be sure to enable DHCP in the advanced settings for the subnet, as well as SNAT for internet access
-	2. Add the following line in every node's `/etc/network/interfaces`: `source /etc/network/interfaces.d/*` 
+7. Create an SDN
+ 	1. Create an evpn controller with all nodes as peers
+        2. Create an evpn zone with all nodes as exit nodes and 'local routing' enabled vnet and subnet in order to allow network communication between these nodes.
+	3. Create the VNet and Subnets. Be sure to enable DHCP in the advanced settings for the subnet, as well as SNAT for internet access
+	4. Add the following line in every node's `/etc/network/interfaces`: `source /etc/network/interfaces.d/*`
+        5. Ensure that `frr-pythontools` is installed on all the nodes
+        6. Press 'Apply' 	
 
 And now we're ready to start setting up VMs for kubernetes :D
