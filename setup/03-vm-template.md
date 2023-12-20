@@ -18,4 +18,5 @@ qm set 9000 --ide2 server-zfs-storage:cloudinit
 qm set 9000 --serial0 socket --vga serial0
 qm set 9000 --agent enabled=1
 qm template 9000
+rm noble-server-cloudimg-amd64.img
 ```
