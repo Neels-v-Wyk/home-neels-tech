@@ -17,6 +17,8 @@ qm set 9000 --boot c --bootdisk scsi0
 qm set 9000 --ide2 server-zfs-storage:cloudinit
 qm set 9000 --serial0 socket --vga serial0
 qm set 9000 --agent enabled=1
+qm set 9000 --sshkey ~/.ssh/id_rsa.pub
 qm template 9000
 rm noble-server-cloudimg-amd64.img
 ```
+You'll still need to expand the boot disk after this
