@@ -1,6 +1,7 @@
 # Don't commit secrets :3
 secrets.tfvars
 secrets.env
+.env
 
 # Terraform stuff
 .terraform/
