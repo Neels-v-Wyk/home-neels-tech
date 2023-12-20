@@ -49,6 +49,8 @@ These servers come with windows installed, which we won't be using.
 4. Create a cluster on your favorite node and join the cluster from the two other nodes
 5. Set up ZFS with all the defaults, make sure the pool name is consistent accross all three nodes
 6. Create a shared ZFS storage for all the nodes from the cluster management tab
-7. Follow [this guide](https://github.com/ehlesp/smallab-k8s-pve-guide/blob/main/G017%20-%20Virtual%20Networking%20~%20Network%20configuration.md) for setting up a virtual bridge that your VMs will use
+7. Create an SDN zone (simple), vnet and subnet in order to allow network communication between these nodes.
+  1. Be sure to enable DHCP in the advanced settings for the subnet, as well as SNAT for internet access
+  2. Add the following line in every node's `/etc/network/interfaces`: `source /etc/network/interfaces.d/*` 
 
 And now we're ready to start setting up VMs for kubernetes :D
