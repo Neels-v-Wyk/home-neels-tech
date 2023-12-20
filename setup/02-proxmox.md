@@ -49,7 +49,7 @@ These servers come with windows installed, which we won't be using.
 4. Create a cluster on your favorite node and join the cluster from the two other nodes
 5. Set up ZFS with all the defaults, make sure the pool name is consistent accross all three nodes
 6. Create a shared ZFS storage for all the nodes from the cluster management tab
-7. Create an SDN
+7. Create an SDN # I COULD NOT GET THIS TO WORK I'M JUST GONNA RUN IT ALL ON THE SAME NETWORK BECAUSE VLANS MAKE ME ANGRY
  	1. Create an evpn controller with all nodes as peers
         2. Create an evpn zone with all nodes as exit nodes and 'local routing' enabled vnet and subnet in order to allow network communication between these nodes.
 	3. Create the VNet and Subnets. Be sure to enable DHCP in the advanced settings for the subnet, as well as SNAT for internet access
