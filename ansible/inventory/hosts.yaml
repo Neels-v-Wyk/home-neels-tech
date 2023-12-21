@@ -1,0 +1,36 @@
+all:
+  hosts:
+    k8s-node-01:
+      ansible_host: $KUBE_NODE_1_IP
+      ip: $KUBE_NODE_1_IP
+      access_ip: $KUBE_NODE_2_IP
+    k8s-node-02:
+      ansible_host: $KUBE_NODE_2_IP
+      ip: $KUBE_NODE_2_IP
+      access_ip: $KUBE_NODE_2_IP
+    k8s-node-03:
+      ansible_host: $KUBE_NODE_3_IP
+      ip: $KUBE_NODE_3_IP
+      access_ip: $KUBE_NODE_3_IP
+  children:
+    kube_control_plane:
+      hosts:
+        k8s-node-01:
+        k8s-node-02:
+        k8s-node-03:
+    kube_node:
+      hosts:
+        k8s-node-01:
+        k8s-node-02:
+        k8s-node-03:
+    etcd:
+      hosts:
+        k8s-node-01:
+        k8s-node-02:
+        k8s-node-03:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
