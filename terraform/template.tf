@@ -1,5 +1,5 @@
 resource "proxmox_virtual_environment_file" "cloud_config" {
-  count       = 3
+  count        = 3
   content_type = "snippets"
   datastore_id = "nas-nfs"
   node_name    = "server-0${count.index + 1}"
@@ -33,13 +33,13 @@ runcmd:
   - systemctl start qemu-guest-agent
 
 EOF
-
-    file_name = "ubuntu-terraform-cloud-config.yaml"
+    # Prevent files overwriting eachother by giving them unique names with the count.index
+    file_name = "ubuntu-terraform-cloud-config${count.index + 1}.yaml"
   }
 }
 
 resource "proxmox_virtual_environment_file" "ubuntu_cloud_image" {
-  count = 3
+  count        = 3
   content_type = "iso"
   datastore_id = "nas-nfs"
   node_name    = "server-0${count.index + 1}"

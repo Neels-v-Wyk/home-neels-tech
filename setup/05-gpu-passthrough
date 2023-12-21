@@ -16,6 +16,10 @@ vfio_pci
 vfio_virqfd
 ```
 
+Run `update grub` to solidify your changes and reboot.
+
+### Adding the GPU to VMs
+
 Run `lspci` to identify the GPU:
 ```
 root@server-01:~# lspci

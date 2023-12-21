@@ -1,6 +1,6 @@
 resource "proxmox_virtual_environment_vm" "k8s-node" {
 
-  count      = 3
+  count       = 3
   name        = "k8s-node-${count.index + 1}"
   description = "Kubernetes Node Managed by Terraform"
   tags        = ["terraform", "ubuntu", "kubernetes"]
@@ -19,10 +19,10 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
   }
 
   # Passthrough Zigbee dongle for home assistant. Currently doesn't work :(
-  usb {
-   host = "10c4:ea60"
-   usb3 = true
-  }
+  # usb {
+  #  host = "10c4:ea60"
+  #  usb3 = true
+  # }
 
   startup {
     order      = count.index + 10
@@ -34,7 +34,7 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
     datastore_id = "server-zfs-storage"
     interface    = "scsi0"
     size         = "50"
-    file_id = proxmox_virtual_environment_file.ubuntu_cloud_image[count.index].id
+    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image[count.index].id
   }
 
   initialization {
@@ -51,8 +51,13 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
       password = random_password.ubuntu_vm_password.result
       username = "ubuntu"
     }
-    
+
     user_data_file_id = proxmox_virtual_environment_file.cloud_config[count.index].id
+  }
+
+  hostpci {
+    device = "hostpci0"
+    id     = "0000:00:02.0"
   }
 
   network_device {
@@ -79,18 +84,4 @@ resource "random_password" "ubuntu_vm_password" {
 resource "tls_private_key" "ubuntu_vm_key" {
   algorithm = "RSA"
   rsa_bits  = 2048
-}
-
-output "ubuntu_vm_password" {
-  value     = random_password.ubuntu_vm_password.result
-  sensitive = true
-}
-
-output "ubuntu_vm_private_key" {
-  value     = tls_private_key.ubuntu_vm_key.private_key_pem
-  sensitive = true
-}
-
-output "ubuntu_vm_public_key" {
-  value = tls_private_key.ubuntu_vm_key.public_key_openssh
 }

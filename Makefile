@@ -20,6 +20,13 @@ vms: # Create VMs in proxmox
 	terraform init -upgrade && \
 	terraform apply -auto-approve
 
+vms-destroy: # Destroy VMs in proxmox
+	@echo "Destroying VMs in proxmox"
+	source .env && \
+	cd terraform && \
+	terraform init -upgrade && \
+	terraform destroy -auto-approve
+
 kubernetes: # Install kubernetes to VMs
 	@echo "Installing kubernetes to nodes"
 	ssh-keygen -f "~/.ssh/known_hosts" -R $(PROXMOX_IPS)
