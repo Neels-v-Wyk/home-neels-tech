@@ -1,6 +1,6 @@
 
 provider "proxmox" {
-  endpoint = var.proxmox_ve_node_1_ip
+  endpoint = "https://${var.proxmox_ve_node_1_ip}:8006/api2/json"
 
   # The Proxmox VE API doesn't allow some operations when using token authentication
   # so we'll have to use username/password authentication

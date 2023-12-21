@@ -1,5 +1,12 @@
 # Creating a VM template
 
+## DEPRECATED
+This step can be skipped.
+
+This way is the more manual way of doing things. It was originally done this because the terraform provider was limited in that it could not do this on it's own. Using a new terraform provider that's something we can do, so just change the `template.tf` file in the terraform directory
+
+### Setting things up
+
 In order to make this server deployable from terraform, we need a template that we will be specifying. I'll be using ubuntu for this.
 
 You can find the latest cloud base images for ubuntu at https://cloud-images.ubuntu.com/, so for met that's https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
@@ -21,4 +28,4 @@ qm set 9000 --sshkey ~/.ssh/id_rsa.pub
 qm template 9000
 rm noble-server-cloudimg-amd64.img
 ```
-You'll still need to expand the boot disk after this
+You'll still need to expand the boot disk after this if you run this image directly

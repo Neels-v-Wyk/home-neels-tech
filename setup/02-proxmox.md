@@ -50,7 +50,7 @@ These servers come with windows installed, which we won't be using.
 5. Set up ZFS with all the defaults, make sure the pool name is consistent accross all three nodes
 6. Create a shared ZFS storage for all the nodes from the cluster management tab
 7. Set up your ssh key by running `ssh-copy-id -i ~/.ssh/id_rsa root@192.168.0.101` (this should copy to all nodes if it's already clustered)
-8. Create an SDN # I COULD NOT GET THIS TO WORK I'M JUST GONNA RUN IT ALL ON THE SAME NETWORK BECAUSE VLANS MAKE ME ANGRY
+8. Create an SDN # I COULD NOT GET THIS TO WORK. The other solution is probably a router inside a virtual network to assign DHCP addresses and route to the external network. Maybe I'll revisit this
  	1. Create an evpn controller with all nodes as peers
         2. Create an evpn zone with all nodes as exit nodes and 'local routing' enabled vnet and subnet in order to allow network communication between these nodes.
 	3. Create the VNet and Subnets. Be sure to enable DHCP in the advanced settings for the subnet, as well as SNAT for internet access

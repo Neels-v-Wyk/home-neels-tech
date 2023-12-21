@@ -1,29 +1,31 @@
-resource "proxmox_virtual_environment_vm" "kube-node-1" {
-  name        = "kube-node-{count.index + 1}"
+resource "proxmox_virtual_environment_vm" "k8s-node" {
+
+  count      = 3
+  name        = "k8s-node-${count.index + 1}"
   description = "Kubernetes Node Managed by Terraform"
   tags        = ["terraform", "ubuntu", "kubernetes"]
 
-  node_name = "server-0{count.index + 1}"
-  vm_id     = "100{count.index + 1}"
+  node_name = "server-0${count.index + 1}"
+  vm_id     = count.index + 500
 
   agent {
     enabled = true
   }
 
   cpu {
-    cores = 2
+    cores   = 2
     sockets = 1
-    type = "host"
+    type    = "host"
   }
 
-  # Passthrough Zigbee dongle for home assistant
+  # Passthrough Zigbee dongle for home assistant. Currently doesn't work :(
   usb {
-    host = "10c4:ea60"
-    usb3 = true
+   host = "10c4:ea60"
+   usb3 = true
   }
 
   startup {
-    order      = "1{count.index + 1}"
+    order      = count.index + 10
     up_delay   = "30"
     down_delay = "60"
   }
@@ -31,31 +33,26 @@ resource "proxmox_virtual_environment_vm" "kube-node-1" {
   disk {
     datastore_id = "server-zfs-storage"
     interface    = "scsi0"
-    size        = "50G"
-  }
-
-  clone {
-    datastore_id = "server-zfs-storage"
-    node_name    = "server-01"
-    vm_id        = "9000"
+    size         = "50"
+    file_id = proxmox_virtual_environment_file.ubuntu_cloud_image[count.index].id
   }
 
   initialization {
+
     ip_config {
-      dns = "1.1.1.1, 1.0.0.1"
       ipv4 {
-        address = "192.168.0.5{count.index + 1}/24"
+        address = "192.168.0.5${count.index + 1}/24"
         gateway = "192.168.0.1"
       }
     }
 
     user_account {
-      keys     = [trimspace(tls_private_key.ubuntu_vm_key.public_key_openssh)]
+      keys     = [var.ssh_public_key]
       password = random_password.ubuntu_vm_password.result
       username = "ubuntu"
     }
-
-    user_data_file_id = proxmox_virtual_environment_file.cloud_config.id
+    
+    user_data_file_id = proxmox_virtual_environment_file.cloud_config[count.index].id
   }
 
   network_device {
