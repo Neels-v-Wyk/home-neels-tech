@@ -29,7 +29,7 @@ vms-destroy: # Destroy VMs in proxmox
 
 kubernetes: # Install kubernetes to VMs
 	@echo "Installing kubernetes to nodes"
-	ssh-keygen -f "~/.ssh/known_hosts" -R $(PROXMOX_IPS)
+	ssh-keygen -f "~/.ssh/known_hosts" -R $(KUBERNETES_IPS)
 	./scripts/kubespray/run.sh
 
 services: # Install services to kubernetes cluster using kustomize

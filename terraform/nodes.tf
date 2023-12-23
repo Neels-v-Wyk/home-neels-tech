@@ -6,7 +6,7 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
   tags        = ["terraform", "ubuntu", "kubernetes"]
 
   node_name = "server-0${count.index + 1}"
-  vm_id     = count.index + 500
+  vm_id     = 801 + count.index
 
   agent {
     enabled = true
@@ -18,11 +18,17 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
     type    = "host"
   }
 
-  # Passthrough Zigbee dongle for home assistant. Currently doesn't work :(
-  # usb {
-  #  host = "10c4:ea60"
-  #  usb3 = true
-  # }
+  # USB Passthrough Zigbee dongle for home assistant. 
+  usb {
+   host = "10c4:ea60"
+   usb3 = true
+  }
+
+  # GPU Passthrough for jellyfin. 
+  hostpci {
+   device = "hostpci0"
+  id     = "0000:00:02"
+  }
 
   startup {
     order      = count.index + 10
@@ -31,11 +37,13 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
   }
 
   disk {
-    datastore_id = "server-zfs-storage"
+    datastore_id = "local-lvm"
     interface    = "scsi0"
     size         = "50"
     file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image[count.index].id
   }
+
+  boot_order = ["scsi0", "ide2"]
 
   initialization {
 
@@ -55,10 +63,6 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
     user_data_file_id = proxmox_virtual_environment_file.cloud_config[count.index].id
   }
 
-  hostpci {
-    device = "hostpci0"
-    id     = "0000:00:02.0"
-  }
 
   network_device {
     bridge = "vmbr0"
@@ -69,7 +73,7 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
   }
 
   tpm_state {
-    datastore_id = "server-zfs-storage"
+    datastore_id = "local-lvm"
   }
 
   serial_device {}
@@ -79,9 +83,4 @@ resource "random_password" "ubuntu_vm_password" {
   length           = 16
   override_special = "_%@"
   special          = true
-}
-
-resource "tls_private_key" "ubuntu_vm_key" {
-  algorithm = "RSA"
-  rsa_bits  = 2048
 }

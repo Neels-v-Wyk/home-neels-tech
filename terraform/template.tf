@@ -34,7 +34,7 @@ runcmd:
 
 EOF
     # Prevent files overwriting eachother by giving them unique names with the count.index
-    file_name = "ubuntu-terraform-cloud-config${count.index}.yaml"
+    file_name = "ubuntu-terraform-cloud-config${count.index + 1}.yaml"
   }
 }
 
@@ -46,6 +46,6 @@ resource "proxmox_virtual_environment_file" "ubuntu_cloud_image" {
 
   source_file {
     path = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
-    file_name = "noble-server-cloudimg-amd64-${count.index}.img"
+    file_name = "noble-server-cloudimg-amd64-${count.index + 1}.img"
   }
 }
