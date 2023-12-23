@@ -1,7 +1,7 @@
 resource "proxmox_virtual_environment_vm" "k8s-node" {
 
   count       = 3
-  name        = "k8s-node-${count.index + 1}"
+  name        = "k8s-node-0${count.index + 1}"
   description = "Kubernetes Node Managed by Terraform"
   tags        = ["terraform", "ubuntu", "kubernetes"]
 
@@ -28,6 +28,11 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
   hostpci {
    device = "hostpci0"
   id     = "0000:00:02"
+  }
+
+  # set the memory to 6GB
+  memory { 
+    dedicated = 6144
   }
 
   startup {

@@ -4,7 +4,7 @@ IMAGE_TAG="v2.23.1"
 
 docker pull quay.io/kubespray/kubespray:$IMAGE_TAG
 docker run --rm -it \
-    --mount type=bind,source="$(pwd)"/ansible/inventory,dst=/inventory \
-    --mount type=bind,source="${HOME}"/.ssh/id_rsa,dst=/root/.ssh/id_rsa \
-    --mount type=bind,source="$(pwd)"/scripts/kubespray,dst=/scripts \
-    quay.io/kubespray/kubespray:$IMAGE_TAG bash
+    -v $PWD/ansible/inventory:/inventory \
+    -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa \
+    -v $PWD/scripts/kubespray:/scripts \
+    quay.io/kubespray/kubespray:$IMAGE_TAG bash -c "/scripts/generate-inventory.sh $KUBERNETES_CLUSTER_NAME $KUBESPRAY_IPS; /scripts/cluster.sh $KUBERNETES_CLUSTER_NAME"

@@ -7,7 +7,7 @@ resource "proxmox_virtual_environment_file" "cloud_config" {
   source_raw {
     data = <<EOF
 #cloud-config
-hostname: k8s-node-${count.index + 1}
+hostname: k8s-node-0${count.index + 1}
 
 users:
   - default

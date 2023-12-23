@@ -1,0 +1,29 @@
+# You have to configure arp_ignore and arp_announce to avoid answering ARP queries from kube-ipvs0 interface for MetalLB to work.
+kube_proxy_strict_arp: true
+
+metallb_enabled: true
+metallb_speaker_enabled: true
+
+# enable tolerations for metallb because we also use the control plane nodes as worker nodes
+metallb_config:
+  controller:
+    nodeselector:
+      kubernetes.io/os: linux
+    tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Equal"
+      value: ""
+      effect: "NoSchedule"
+
+  address_pools:
+    primary:
+      ip_range:
+        - 192.0.10.0-192.0.10.254
+      auto_assign: false # When set to false, you need to explicitly set the loadBalancerIP in the service!
+      avoid_buggy_ips: true # When set to true, .0 and .255 addresses will be avoided.
+  layer2:
+    - primary
+
+upstream_dns_servers:
+  - 1.1.1.1
+  - 1.0.0.1

@@ -2,7 +2,7 @@
 
 inventory=$1
 
-INVENTORY_PATH="/inventory/$inventory"
+INVENTORY_PATH="./inventory/$inventory"
 
 if [ -z "$inventory" ]
 then
@@ -31,4 +31,4 @@ fi
 
 ansible-playbook -i $INVENTORY_PATH/hosts.yaml \
 -e @$INVENTORY_PATH/cluster-variables.yaml \
---become --become-user=root -u ansible cluster.yml
+--become --become-user=root -u ubuntu cluster.yml
