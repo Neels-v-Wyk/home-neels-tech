@@ -2,6 +2,8 @@
 secrets.tfvars
 secrets.env
 .env
+tempdir/
+admin.conf
 
 # Terraform stuff
 .terraform/
@@ -14,3 +16,5 @@ terraform.rc
 terraform.tfvars
 terraform.tfstate
 terraform.tfstate.backup
+
+kubernetes/*/*/charts/

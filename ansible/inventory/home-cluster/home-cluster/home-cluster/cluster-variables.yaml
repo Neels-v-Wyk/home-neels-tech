@@ -20,7 +20,7 @@ metallb_config:
   address_pools:
     primary:
       ip_range:
-        - 192.168.10.80-192.168.10.100
+        - 192.168.10.80-192.168.10.90
       auto_assign: false # When set to false, you need to explicitly set the loadBalancerIP in the service!
       avoid_buggy_ips: true # When set to true, .0 and .255 addresses will be avoided.
   layer2:

@@ -4,10 +4,12 @@ resource "proxmox_virtual_environment_vm" "k8s-node" {
   name        = "k8s-node-0${count.index + 1}"
   description = "Kubernetes Node Managed by Terraform"
   tags        = ["terraform", "ubuntu", "kubernetes"]
+  on_boot     = true
 
   node_name = "server-0${count.index + 1}"
   vm_id     = 801 + count.index
 
+  
   agent {
     enabled = true
   }

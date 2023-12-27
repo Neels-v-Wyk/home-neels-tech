@@ -1,0 +1,59 @@
+deployment:
+  dnsConfig:
+    nameservers:
+      - 1.1.1.1
+      - 8.8.8.8
+
+service:
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 192.168.10.80
+
+ingressRoute:
+  annotations:
+    cert-manager.io/cluster-issuer: star-home-neels-tech-issuer
+  dashboard:
+    entryPoints:
+      - websecure
+    matchRule: Host(`traefik.home.neels.tech`)
+    middlewares:
+      - name: redirect-to-https
+  tls:
+    secretName: traefik-home-neels-tech-tls
+
+# additionalArguments:
+#   - --certificatesresolvers.le.acme.dnschallenge.provider=cloudflare
+#   - --certificatesresolvers.le.acme.email=$CLOUDFLARE_API_EMAIL
+#   - --certificatesresolvers.le.acme.dnschallenge.resolvers=1.1.1.1
+#   - --certificatesresolvers.le.acme.storage=/ssl-certs/acme-cloudflare.json
+
+ports:
+  web:
+    redirectTo:
+      port: websecure
+  websecure:
+    tls:
+      enabled: true
+      # certResolver: cloudflare
+
+persistence:
+  enabled: true
+  name: ssl-certs
+  size: 200Mi
+  path: /ssl-certs
+
+# env:
+#   - name: CF_API_EMAIL
+#     valueFrom:
+#       secretKeyRef:
+#         key: email
+#         name: cloudflare-credentials
+#   - name: CF_API_KEY
+#     valueFrom:
+#       secretKeyRef:
+#         key: api-key
+#         name: cloudflare-credentials
+
+# Set Traefik as your default Ingress Controller, according to Kubernetes 1.19+ changes.
+ingressClass:
+  enabled: true
+  isDefaultClass: true

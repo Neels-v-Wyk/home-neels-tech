@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: star-home-neels-tech-issuer
+spec:
+  acme:
+    email: neels@neels.tech
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: star-home-neels-tech-issuer-account-key
+    solvers:
+    - dns01:
+        cloudflare:
+          email: cloudflare@neels.tech
+          apiKeySecretRef:
+            name: cloudflare-credentials
+            key: api-key
+      selector:
+        dnsZones:
+        - 'home.neels.tech'

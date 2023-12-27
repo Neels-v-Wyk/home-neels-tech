@@ -7,4 +7,4 @@ docker run --rm -it \
     -v $PWD/ansible/inventory:/inventory \
     -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa \
     -v $PWD/scripts/kubespray:/scripts \
-    quay.io/kubespray/kubespray:$IMAGE_TAG bash -c "/scripts/generate-inventory.sh $KUBERNETES_CLUSTER_NAME $KUBESPRAY_IPS; /scripts/cluster.sh $KUBERNETES_CLUSTER_NAME"
+    quay.io/kubespray/kubespray:$IMAGE_TAG bash -c "/scripts/cluster.sh $KUBERNETES_CLUSTER_NAME" #  "/scripts/generate-inventory.sh $KUBERNETES_CLUSTER_NAME $KUBESPRAY_IPS; 

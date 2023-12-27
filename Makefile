@@ -1,6 +1,8 @@
 SHELL := /bin/bash
 include .env
 
+.PHONY: help clean vms vms-destroy demolish kubernetes services home
+
 help: # Show the function of different make targets
 	@echo "Available targets:"
 	@echo "  help        : Show the function of different make targets"
@@ -34,24 +36,33 @@ vms-destroy: # Destroy VMs in proxmox
 demolish: vms-destroy clean # Destroy VMs in proxmox and clean up the local environment
 	@echo "Destroying VMs in proxmox and cleaning up the local environment"
 
-kubernetes: # Install kubernetes to VMs
+kubernetes-pre-setup: # Install kubernetes to VMs
 	@echo "Installing kubernetes to nodes"
 	# ssh-keygen -f ~/.ssh/known_hosts -R $(KUBERNETES_IPS)
 	./scripts/kubespray/run.sh
 
-services: # Install services to kubernetes cluster using kustomize
+kubernetes-post-setup: kubernetes # Post setup for kubernetes
+	@echo "Post setup for kubernetes"
+	sed -i '' 's/127\.0\.0\.1/${KUBERNETES_PRIMARY_IP}/g' ansible/inventory/${KUBERNETES_CLUSTER_NAME}/artifacts/admin.conf
+
+kubernetes: clean kubernetes-pre-setup kubernetes-post-setup # Install and configure kubernetes
+	@echo "Installing and configuring kubernetes"
+
+services-base: # Install services to kubernetes cluster using kustomize
 	@echo "Installing services to kubernetes cluster"
-	# TODO:
-	# 	- Add kustomize
-	#   - Add Argocd
-	# 	- Add ingress
-	# 	- Add metallb
-	# 	- Add cert-manager
-	#   - Add jellyfin
-	#   - Add arr stack
-	#   - Add home assistant
-	#   - Add pihole
-	#   - Add wireguard
+	./scripts/kubernetes/kustomize.sh
+
+# TODO:
+# 	- Add kustomize
+#   - Add Argocd
+# 	- Add ingress
+# 	- Add metallb
+# 	- Add cert-manager
+#   - Add jellyfin
+#   - Add arr stack
+#   - Add home assistant
+#   - Add pihole
+#   - Add wireguard
 
 home: vms kubernetes services # Create VMs, install kubernetes and services
 	@echo "Welcome home"
