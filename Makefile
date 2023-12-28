@@ -66,7 +66,7 @@ services: services-base services-argocd # Install services to kubernetes cluster
 #   - Add wireguard
 #   - Add logging
 #   - Add monitoring (grafana/loki)
-#   - document node label for igpu, kernel update to linux-generic for drivers
+#   - document node label for igpu, kernel update to linux-generic for drivers and norootsquash on nas for jellyfin share
 
 home: vms kubernetes services # Create VMs, install kubernetes and services
 	@echo "Welcome home"

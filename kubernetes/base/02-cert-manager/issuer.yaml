@@ -5,7 +5,7 @@ metadata:
 spec:
   acme:
     email: neels@neels.tech
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: star-home-neels-tech-issuer-account-key
     solvers:
