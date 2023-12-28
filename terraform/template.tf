@@ -31,6 +31,7 @@ packages:
 runcmd:
   - systemctl enable qemu-guest-agent
   - systemctl start qemu-guest-agent
+  - apt install -y linux-generic # we need the i915 driver for gpu passthrough, this isn't supported in the base cloud image
 
 EOF
     # Prevent files overwriting eachother by giving them unique names with the count.index
