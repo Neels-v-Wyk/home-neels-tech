@@ -71,7 +71,11 @@ spec:
         - containerPort: 7359
           name: discovery-udp
           protocol: UDP      
-        resources: {}
+        resources: 
+            requests: 
+                gpu.intel.com/i915: "1" 
+            limits: 
+                gpu.intel.com/i915: "1" 
         stdin: true
         tty: true
         volumeMounts:
