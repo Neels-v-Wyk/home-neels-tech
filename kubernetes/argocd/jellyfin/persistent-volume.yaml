@@ -21,7 +21,7 @@ spec:
     volumeAttributes:
       server: 192.168.0.110
       share: /nfs
-      subdir: jellyfin-config
+      subdir: kubernetes/jellyfin-config
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -46,7 +46,7 @@ spec:
     volumeAttributes:
       server: 192.168.0.110
       share: /nfs
-      subdir: jellyfin-data
+      subdir: kubernetes/jellyfin-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
