@@ -9,4 +9,3 @@ resources:
 
 patchesStrategicMerge:
 - configmap-patch.yaml
-- deployment-patch.yaml

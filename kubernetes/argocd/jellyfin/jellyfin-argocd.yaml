@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jellyfin
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Neels-v-Wyk/home-neels-tech.git
+    targetRevision: HEAD
+    path: kubernetes/argocd/jellyfin
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: jellyfin

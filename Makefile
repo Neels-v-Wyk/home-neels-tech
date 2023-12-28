@@ -49,20 +49,23 @@ kubernetes: clean kubernetes-pre-setup kubernetes-post-setup # Install and confi
 	@echo "Installing and configuring kubernetes"
 
 services-base: # Install services to kubernetes cluster using kustomize
-	@echo "Installing services to kubernetes cluster"
+	@echo "Installing base/essential services to kubernetes cluster"
 	./scripts/kubernetes/kustomize.sh
 
+services-argocd: # apply argocd manifests and let argocd deploy to kubernetes cluster
+	@echo "Installing services via argocd to cluster"
+	./scripts/kubernetes/argocd.sh
+
+services: services-base services-argocd # Install services to kubernetes cluster using kustomize
+
 # TODO:
-# 	- Add kustomize
-#   - Add Argocd
-# 	- Add ingress
-# 	- Add metallb
-# 	- Add cert-manager
 #   - Add jellyfin
 #   - Add arr stack
 #   - Add home assistant
-#   - Add pihole
+#   - Add adguard home
 #   - Add wireguard
+#   - Add logging
+#   - Add monitoring (grafana/loki)
 
 home: vms kubernetes services # Create VMs, install kubernetes and services
 	@echo "Welcome home"
