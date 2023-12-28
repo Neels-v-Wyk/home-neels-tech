@@ -17,11 +17,11 @@ spec:
     driver: nfs.csi.k8s.io
     # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
     # make sure this value is unique for every share in the cluster
-    volumeHandle: 192.168.0.110#nfs#kubernetes#jellyfin-config
+    volumeHandle: 192.168.0.110#nfs#kubernetes
     volumeAttributes:
       server: 192.168.0.110
       share: /nfs
-      subdir: kubernetes/jellyfin-config
+      subdir: jellyfin-config
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -42,11 +42,11 @@ spec:
     driver: nfs.csi.k8s.io
     # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
     # make sure this value is unique for every share in the cluster
-    volumeHandle: 192.168.0.110#nfs#kubernetes#jellyfin-data
+    volumeHandle: 192.168.0.110#nfs#kubernetes
     volumeAttributes:
       server: 192.168.0.110
       share: /nfs
-      subdir: kubernetes/jellyfin-data
+      subdir: jellyfin-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
