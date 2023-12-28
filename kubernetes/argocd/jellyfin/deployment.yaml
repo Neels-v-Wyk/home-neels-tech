@@ -36,7 +36,14 @@ spec:
       #     path: /dev/video11 
       # - name: device-video12  #Only needed if you want to use your Raspberry Pi V4L2 video encoding.
       #   hostPath:
-      #      path: /dev/video12 
+      #      path: /dev/video12
+      volumes:
+      - name: jellyfin-pvc-config
+        persistentVolumeClaim:
+          claimName: jellyfin-pvc-config
+      - name: jellyfin-pvc-data
+        persistentVolumeClaim:
+          claimName: jellyfin-pvc-data
       containers:
       - env:
         - name: JELLYFIN_PublishedServerUrl 
@@ -71,13 +78,6 @@ spec:
                 gpu.intel.com/i915: "1" 
         stdin: true
         tty: true
-        volumes:
-        - name: jellyfin-pvc-config
-          persistentVolumeClaim:
-            claimName: jellyfin-pvc-config
-        - name: jellyfin-pvc-data
-          persistentVolumeClaim:
-            claimName: jellyfin-pvc-data
         volumeMounts:
         - mountPath: /config
           name: jellyfin-pvc-config
