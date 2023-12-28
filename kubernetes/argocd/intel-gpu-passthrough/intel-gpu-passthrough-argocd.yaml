@@ -11,6 +11,18 @@ spec:
     targetRevision: 0.29.0
     helm:
       releaseName: intel/intel-device-plugins-operator
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gpu-device-plugin
+  namespace: default
+spec:
+  project: default
+  source:
   - chart: gpu-device-plugin
     repoURL: https://intel.github.io/helm-charts/
     targetRevision: 0.29.0

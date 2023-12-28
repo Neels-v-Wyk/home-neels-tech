@@ -9,6 +9,7 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi
   mountOptions:
     - nfsvers=3
   csi:
@@ -32,6 +33,7 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi
   mountOptions:
     - nfsvers=3
   csi:
