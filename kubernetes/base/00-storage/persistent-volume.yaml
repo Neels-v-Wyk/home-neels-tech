@@ -6,7 +6,7 @@ metadata:
   name: pv-nfs
 spec:
   capacity:
-    storage: 5Ti
+    storage: 50Mi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
@@ -17,7 +17,7 @@ spec:
     driver: nfs.csi.k8s.io
     # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
     # make sure this value is unique for every share in the cluster
-    volumeHandle: $NFS_SERVER_IP#nfs#kubernetes
+    volumeHandle: $NFS_SERVER_IP#nfs#kubernetes-nfs
     volumeAttributes:
       server: $NFS_SERVER_IP
       share: /nfs

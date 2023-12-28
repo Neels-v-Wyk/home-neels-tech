@@ -4,6 +4,9 @@ metadata:
   name: jellyfin
   namespace: argocd
 spec:
+  syncPolicy:
+    automated:
+      prune: true
   project: default
   source:
     repoURL: https://github.com/Neels-v-Wyk/home-neels-tech.git

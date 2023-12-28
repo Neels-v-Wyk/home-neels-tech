@@ -4,7 +4,7 @@ metadata:
   name: jellyfin-pvc-config
   namespace: jellyfin
 spec:
-  volumeName: pv-nfs
+  volumeName: jellyfin-pv-nfs-config
   accessModes:
     - ReadWriteMany
   volumeMode: Filesystem
@@ -18,7 +18,7 @@ metadata:
   name: jellyfin-pvc-data
   namespace: jellyfin
 spec:
-  volumeName: pv-nfs
+  volumeName: jellyfin-pv-nfs-data
   accessModes:
     - ReadWriteMany
   volumeMode: Filesystem
