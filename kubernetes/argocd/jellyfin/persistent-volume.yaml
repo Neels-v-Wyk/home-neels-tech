@@ -43,3 +43,29 @@ spec:
       server: $NFS_SERVER_IP
       share: /nfs
       subdir: jellyfin-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyfin-pvc-config
+  namespace: jellyfin
+spec:
+  volumeName: jellyfin-pv-nfs-config
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyfin-pvc-data
+  namespace: jellyfin
+spec:
+  volumeName: jellyfin-pv-nfs-data
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 4Ti
