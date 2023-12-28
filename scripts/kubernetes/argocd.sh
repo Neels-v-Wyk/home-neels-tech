@@ -7,6 +7,6 @@ source .env
 for dir in ./kubernetes/argocd/*; do
     if [ -d "$dir" ]; then
         # Applying manifest
-        KUBECONFIG=ansible/inventory/$KUBERNETES_CLUSTER_NAME/artifacts/admin.conf kubectl apply -f $dir/*argocd.yaml
+        KUBECONFIG=ansible/inventory/$KUBERNETES_CLUSTER_NAME/artifacts/admin.conf cat $dir/*argocd.yaml | envsubst | kubectl apply -f -
     fi
 done

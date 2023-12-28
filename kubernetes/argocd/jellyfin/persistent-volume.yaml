@@ -16,9 +16,9 @@ spec:
     driver: nfs.csi.k8s.io
     # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
     # make sure this value is unique for every share in the cluster
-    volumeHandle: $NFS_SERVER_IP#nfs#jellyfin-config
+    volumeHandle: 192.168.0.110#nfs#jellyfin-config
     volumeAttributes:
-      server: $NFS_SERVER_IP
+      server: 192.168.0.110
       share: /nfs
       subdir: jellyfin-config
 ---
@@ -40,9 +40,9 @@ spec:
     driver: nfs.csi.k8s.io
     # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
     # make sure this value is unique for every share in the cluster
-    volumeHandle: $NFS_SERVER_IP#nfs#jellyfin-data
+    volumeHandle: 192.168.0.110#nfs#jellyfin-data
     volumeAttributes:
-      server: $NFS_SERVER_IP
+      server: 192.168.0.110
       share: /nfs
       subdir: jellyfin-data
 ---
