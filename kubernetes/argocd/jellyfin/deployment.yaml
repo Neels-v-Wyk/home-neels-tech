@@ -21,13 +21,6 @@ spec:
       labels:
         app: jellyfin
     spec:
-      volumes:
-      - name: jellyfin-pv-nfs-config
-        persistentVolumeClaim:
-          claimName: jellyfin-pvc-config
-      - name: jellyfin-pv-nfs-data
-        persistentVolumeClaim:
-          claimName: jellyfin-pvc-data
       # The settings below have been marked out and can be used when removing the "#"
       # - name: device-vcsm # Only needed if you want to use your Raspberry Pi MMAL video decoding (Enabled as OpenMax H264 decode in gui settings).
       #   hostPath:
@@ -78,6 +71,13 @@ spec:
                 gpu.intel.com/i915: "1" 
         stdin: true
         tty: true
+        volumes:
+        - name: jellyfin-pvc-config
+          persistentVolumeClaim:
+            claimName: jellyfin-pvc-config
+        - name: jellyfin-pvc-data
+          persistentVolumeClaim:
+            claimName: jellyfin-pvc-data
         volumeMounts:
         - mountPath: /config
           name: jellyfin-pvc-config
