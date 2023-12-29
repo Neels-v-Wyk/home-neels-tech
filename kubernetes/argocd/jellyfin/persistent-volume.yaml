@@ -10,6 +10,8 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
+  hostPath:
+    path: "/mnt/kubernetes/jellyfin-pv-local-config"
 ---
 apiVersion: v1
 kind: PersistentVolume
