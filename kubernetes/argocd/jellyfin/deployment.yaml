@@ -66,10 +66,10 @@ spec:
           name: https-tcp
           protocol: TCP
         - containerPort: 1900
-          name: jellyfin-dlna
+          name: dlna-udp
           protocol: UDP
         - containerPort: 7359
-          name: jellyfin-discovery
+          name: discovery-udp
           protocol: UDP      
         resources: 
             requests: 

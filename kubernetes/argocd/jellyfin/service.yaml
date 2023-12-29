@@ -9,11 +9,11 @@ spec:
   ports:
   - port: 1900
     targetPort: 1900
-    name: jellyfin-dlna
+    name: dlna-udp
     protocol: UDP
   - port: 7359
     targetPort: 7359
-    name: jellyfin-discovery
+    name: discovery-udp
     protocol: UDP
   type: ClusterIP
 ---
