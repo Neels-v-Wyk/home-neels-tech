@@ -8,6 +8,8 @@ metadata:
   name: jellyfin
   namespace: jellyfin
 spec:
+  selector:
+    app: jellyfin
   ports:
   - name: http
     port: 80
