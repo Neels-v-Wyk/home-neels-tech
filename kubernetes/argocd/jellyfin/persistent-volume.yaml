@@ -42,6 +42,7 @@ metadata:
   name: jellyfin-pvc-config
   namespace: jellyfin
 spec:
+  storageClassName: local-storage
   volumeName: jellyfin-pv-local-config
   accessModes:
     - ReadWriteMany

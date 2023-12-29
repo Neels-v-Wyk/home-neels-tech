@@ -67,6 +67,7 @@ services: services-base services-argocd # Install services to kubernetes cluster
 #   - Add monitoring (grafana/loki)
 #   - document node label for igpu, kernel update to linux-generic for drivers and norootsquash on nas for jellyfin share
 #   - document comicvine api key for kapowarr
+#   - document local storage for arr stack due to sqlite
 
 home: vms kubernetes services # Create VMs, install kubernetes and services
 	@echo "Welcome home"
