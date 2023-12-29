@@ -1,28 +1,19 @@
----
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jellyseerr-pv-nfs-config
+  name: jellyseerr-pv-local-config
   namespace: jellyseerr
+  labels:
+    type: local
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs-csi
-  mountOptions:
-    - nfsvers=3
-    - nolock
-  csi:
-    driver: nfs.csi.k8s.io
-    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
-    # make sure this value is unique for every share in the cluster
-    volumeHandle: 192.168.0.110#nfs#kubernetes-jellyseerr-config
-    volumeAttributes:
-      server: 192.168.0.110
-      share: /nfs
-      subdir: kubernetes/jellyseerr-config
+  storageClassName: local-storage
+  hostPath:
+    path: "/mnt/kubernetes/jellyseerr-pv-local-config"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -30,7 +21,8 @@ metadata:
   name: jellyseerr-pvc-config
   namespace: jellyseerr
 spec:
-  volumeName: jellyseerr-pv-nfs-config
+  storageClassName: local-storage
+  volumeName: jellyseerr-pv-local-config
   accessModes:
     - ReadWriteMany
   resources:
