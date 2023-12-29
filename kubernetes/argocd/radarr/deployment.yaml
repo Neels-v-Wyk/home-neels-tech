@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: radarr
+  name: radarr
+  namespace: radarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      containers:
+        - name: radarr
+          image: ghcr.io/hotio/radarr:latest
+          ports:
+          - name: radarr-tcp
+            containerPort: 8989
+            protocol: TCP
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: UMASK
+              value: "002"
+            - name: TZ
+              value: "Europe/Amsterdam"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+            - name: data-volume
+              mountPath: /data
+            - name: downloads-volume
+              mountPath: /app/qBittorrent/downloads/ # shared download dir so radarr can see it
+      volumes:
+      - name: config-volume
+        persistentVolumeClaim:
+          claimName: radarr-pvc-config
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: radarr-pvc-data
+      - name: downloads-volume
+        persistentVolumeClaim:
+          claimName: radarr-pvc-downloads

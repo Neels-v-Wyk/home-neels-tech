@@ -1,0 +1,106 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-pv-local-config
+  namespace: radarr
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  hostPath:
+    path: "/mnt/kubernetes/radarr-pv-local-config"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-pvc-config
+  namespace: radarr
+spec:
+  volumeName: radarr-pv-local-config
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-pv-nfs-data
+  namespace: radarr
+spec:
+  capacity:
+    storage: 2Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi
+  mountOptions:
+    - nfsvers=3
+    - nolock
+  csi:
+    driver: nfs.csi.k8s.io
+    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
+    # make sure this value is unique for every share in the cluster
+    volumeHandle: 192.168.0.110#nfs#kubernetes-radarr-data
+    volumeAttributes:
+      server: 192.168.0.110
+      share: /nfs
+      subdir: kubernetes/jellyfin-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-pvc-data
+  namespace: radarr
+spec:
+  volumeName: radarr-pv-nfs-data
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Ti
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-pv-nfs-downloads
+  namespace: radarr
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi
+  mountOptions:
+    - nfsvers=3
+    - nolock
+  csi:
+    driver: nfs.csi.k8s.io
+    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
+    # make sure this value is unique for every share in the cluster
+    volumeHandle: 192.168.0.110#nfs#kubernetes-radarr-downloads
+    volumeAttributes:
+      server: 192.168.0.110
+      share: /nfs
+      subdir: kubernetes/qbittorrent-data/
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-pvc-downloads
+  namespace: radarr
+spec:
+  volumeName: radarr-pv-nfs-downloads
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
