@@ -3,6 +3,8 @@ kind: PersistentVolume
 metadata:
   name: jellyfin-pv-local-config
   namespace: jellyfin
+  labels:
+    type: local
 spec:
   capacity:
     storage: 1Gi
