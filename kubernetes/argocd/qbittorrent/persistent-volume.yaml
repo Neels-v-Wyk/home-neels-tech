@@ -1,28 +1,19 @@
----
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: qbittorrent-pv-nfs-config
+  name: qbittorrent-pv-local-config
   namespace: qbittorrent
+  labels:
+    type: local
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs-csi
-  mountOptions:
-    - nfsvers=3
-    - nolock
-  csi:
-    driver: nfs.csi.k8s.io
-    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
-    # make sure this value is unique for every share in the cluster
-    volumeHandle: 192.168.0.110#nfs#kubernetes-qbittorrent-config
-    volumeAttributes:
-      server: 192.168.0.110
-      share: /nfs
-      subdir: kubernetes/qbittorrent-config
+  storageClassName: local-storage
+  hostPath:
+    path: "/mnt/kubernetes/qbittorrent-pv-local-config"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -30,7 +21,8 @@ metadata:
   name: qbittorrent-pvc-config
   namespace: qbittorrent
 spec:
-  volumeName: qbittorrent-pv-nfs-config
+  storageClassName: local-storage
+  volumeName: qbittorrent-pv-local-config
   accessModes:
     - ReadWriteMany
   resources:
@@ -60,7 +52,7 @@ spec:
     volumeAttributes:
       server: 192.168.0.110
       share: /nfs
-      subdir: kubernetes/jellyfin-data
+      subdir: kubernetes/qbittorrent-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
