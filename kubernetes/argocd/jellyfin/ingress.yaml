@@ -42,7 +42,7 @@ spec:
   routes:
     - kind: Rule
       match: Host(`jellyfun.home.neels.tech`)
-    - services:
+      services:
         - name: jellyfin-dlna
           port: 1900
         - name: jellyfin-dscvry
