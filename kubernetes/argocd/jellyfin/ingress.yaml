@@ -13,7 +13,7 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: jellyfin-server
+  name: jellyfin
   namespace: jellyfin
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-to-https@kubernetescrd
@@ -25,7 +25,7 @@ spec:
     - kind: Rule
       match: Host(`jellyfun.home.neels.tech`)
       services:
-        - name: jelllyfin-server
+        - name: jelllyfin
           port: 80
   tls:
     secretName: jellyfin-home-neels-tech-tls
@@ -33,15 +33,13 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteUDP
 metadata:
-  name: jellyfin-server-udp
+  name: jellyfin-udp
   namespace: jellyfin
 spec:
   entryPoints:
     - jellyfin-dscvry
     - jellyfin-dlna
   routes:
-    - kind: Rule
-      match: Host(`jellyfun.home.neels.tech`)
       services:
         - name: jellyfin-dlna
           port: 1900
