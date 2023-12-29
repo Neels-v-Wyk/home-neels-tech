@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jellyfin-pv-nfs-config
+  name: jellyfin-pv-local-config
   namespace: jellyfin
 spec:
   capacity:
@@ -9,19 +9,7 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs-csi
-  mountOptions:
-    - nfsvers=3
-    - nolock
-  csi:
-    driver: nfs.csi.k8s.io
-    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
-    # make sure this value is unique for every share in the cluster
-    volumeHandle: 192.168.0.110#nfs#kubernetes-jellyfin-config
-    volumeAttributes:
-      server: 192.168.0.110
-      share: /nfs
-      subdir: kubernetes/jellyfin-config
+  storageClassName: local-storage
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -54,7 +42,7 @@ metadata:
   name: jellyfin-pvc-config
   namespace: jellyfin
 spec:
-  volumeName: jellyfin-pv-nfs-config
+  volumeName: jellyfin-pv-local-config
   accessModes:
     - ReadWriteMany
   resources:
