@@ -59,7 +59,6 @@ services-argocd: # apply argocd manifests and let argocd deploy to kubernetes cl
 services: services-base services-argocd # Install services to kubernetes cluster using kustomize
 
 # TODO:
-#   - Add jellyfin
 #   - Add arr stack
 #   - Add home assistant
 #   - Add adguard home
@@ -67,6 +66,7 @@ services: services-base services-argocd # Install services to kubernetes cluster
 #   - Add logging
 #   - Add monitoring (grafana/loki)
 #   - document node label for igpu, kernel update to linux-generic for drivers and norootsquash on nas for jellyfin share
+#   - document comicvine api key for kapowarr
 
 home: vms kubernetes services # Create VMs, install kubernetes and services
 	@echo "Welcome home"

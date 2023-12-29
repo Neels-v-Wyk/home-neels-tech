@@ -1,0 +1,15 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kapowarr-tcp
+  namespace: kapowarr
+spec:
+  selector:
+    app: kapowarr
+  ports:
+  - port: 80
+    targetPort: 5656
+    name: kapowarr-tcp
+    protocol: TCP
+  type: ClusterIP

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kapowarr
+  name: kapowarr
+  namespace: kapowarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kapowarr
+  template:
+    metadata:
+      labels:
+        app: kapowarr
+    spec:
+      containers:
+      - name: kapowarr
+        image: mrcas/kapowarr:latest
+        ports:
+        - name: kapowarr-tcp
+          containerPort: 5656
+          protocol: TCP
+        volumeMounts:
+        - name: kapowarr-db
+          mountPath: /app/db
+        - name: kapowarr-temp-downloads
+          mountPath: /app/temp_downloads
+        - name: kapowarr-root-folder
+          mountPath: /comics-1
+      volumes:
+      - name: kapowarr-db
+        persistentVolumeClaim:
+          claimName: kapowarr-db-pvc
+      - name: kapowarr-temp-downloads
+        persistentVolumeClaim:
+          claimName: kapowarr-temp-downloads-pvc
+      - name: kapowarr-root-folder
+        persistentVolumeClaim:
+          claimName: kapowarr-root-folder-pvc

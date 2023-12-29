@@ -1,0 +1,113 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kapowarr-db
+  namespace: kapowarr
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi
+  mountOptions:
+    - nfsvers=3
+    - nolock
+  csi:
+    driver: nfs.csi.k8s.io
+    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
+    # make sure this value is unique for every share in the cluster
+    volumeHandle: 192.168.0.110#nfs#kubernetes-kapowarr-db
+    volumeAttributes:
+      server: 192.168.0.110
+      share: /nfs
+      subdir: kubernetes/kapowarr
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kapowarr-db-pvc
+  namespace: kapowarr
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  volumeName: kapowarr-db
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kapowarr-temp-downloads
+  namespace: kapowarr
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi
+  mountOptions:
+    - nfsvers=3
+    - nolock
+  csi:
+    driver: nfs.csi.k8s.io
+    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
+    # make sure this value is unique for every share in the cluster
+    volumeHandle: 192.168.0.110#nfs#kapowarr-temp-downloads
+    volumeAttributes:
+      server: 192.168.0.110
+      share: /nfs
+      subdir: kubernetes/temp-downloads
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kapowarr-temp-downloads-pvc
+  namespace: kapowarr
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  volumeName: kapowarr-temp-downloads
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kapowarr-root-folder
+  namespace: kapowarr
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi
+  mountOptions:
+    - nfsvers=3
+    - nolock
+  csi:
+    driver: nfs.csi.k8s.io
+    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
+    # make sure this value is unique for every share in the cluster
+    volumeHandle: 192.168.0.110#nfs#kapowarr-root-folder
+    volumeAttributes:
+      server: 192.168.0.110
+      share: /nfs
+      subdir: kubernetes/jellyfin-data/books
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kapowarr-root-folder-pvc
+  namespace: kapowarr
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  volumeName: kapowarr-root-folder

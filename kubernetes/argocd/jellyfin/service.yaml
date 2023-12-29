@@ -26,11 +26,11 @@ spec:
   selector:
     app: jellyfin
   ports:
-  - port: 8096
+  - port: 80
     targetPort: 8096
     name: http-tcp
     protocol: TCP
-  - port: 8920
+  - port: 443
     targetPort: 8920
     name: https-tcp
   type: ClusterIP

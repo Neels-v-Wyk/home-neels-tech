@@ -1,20 +1,20 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: jellyfin-home-neels-tech-tls
+  name: kapowarr-home-neels-tech-tls
 spec:
-  secretName: jellyfin-home-neels-tech-tls
+  secretName: kapowarr-home-neels-tech-tls
   issuerRef:
     name: star-home-neels-tech-issuer
     kind: ClusterIssuer
   dnsNames:
-    - jellyfin.home.neels.tech
+    - kapowarr.home.neels.tech
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: jellyfin
-  namespace: jellyfin
+  name: kapowarr
+  namespace: kapowarr
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-to-https@kubernetescrd
     cert-manager.io/cluster-issuer: star-home-neels-tech-issuer
@@ -23,22 +23,9 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`jellyfin.home.neels.tech`)
+      match: Host(`kapowarr.home.neels.tech`)
       services:
-        - name: jellyfin-tcp
+        - name: kapowarr-tcp
           port: 80
   tls:
-    secretName: jellyfin-home-neels-tech-tls
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRouteUDP
-metadata:
-  name: jellyfin-udp
-  namespace: jellyfin
-spec:
-  routes:
-  - services:
-    - name: jellyfin-udp
-      port: 1900
-    - name: jellyfin-udp
-      port: 7359
+    secretName: kapowarr-home-neels-tech-tls
