@@ -12,9 +12,9 @@ spec:
   - name: http
     port: 80
     protocol: TCP
-    targetPort: 8920
+    targetPort: 8096
   - name: https
-    port: 80
+    port: 443
     protocol: TCP
     targetPort: 8920
   - name: dlna
