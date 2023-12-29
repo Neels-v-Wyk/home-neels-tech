@@ -20,7 +20,7 @@ spec:
           image: ghcr.io/hotio/radarr:latest
           ports:
           - name: radarr-tcp
-            containerPort: 8989
+            containerPort: 7878
             protocol: TCP
           env:
             - name: PUID
