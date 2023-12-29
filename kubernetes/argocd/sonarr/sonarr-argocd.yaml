@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarr
+  namespace: argocd
+spec:
+  syncPolicy:
+    automated:
+      prune: true
+  project: default
+  source:
+    repoURL: https://github.com/Neels-v-Wyk/home-neels-tech.git
+    targetRevision: HEAD
+    path: kubernetes/argocd/sonarr
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sonarr

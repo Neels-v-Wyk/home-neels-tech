@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: qbittorrent
+  name: qbittorrent
+  namespace: qbittorrent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+    spec:
+      containers:
+        - name: qbittorrent
+          image: ghcr.io/hotio/qbittorrent:latest
+          ports:
+          - name: qbittorrent-tcp
+            containerPort: 8080
+            protocol: TCP
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: UMASK
+              value: "002"
+            - name: TZ
+              value: "Europe/Amsterdam"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+            - name: data-volume
+              mountPath: /data
+      volumes:
+      - name: config-volume
+        persistentVolumeClaim:
+          claimName: qbittorrent-pvc-config
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: qbittorrent-pvc-data

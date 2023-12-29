@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prowlarr
+  name: prowlarr
+  namespace: prowlarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prowlarr
+  template:
+    metadata:
+      labels:
+        app: prowlarr
+    spec:
+      containers:
+        - name: prowlarr
+          image: ghcr.io/hotio/prowlarr:latest
+          ports:
+          - name: prowlarr-tcp
+            containerPort: 9696
+            protocol: TCP
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Amsterdam"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+      volumes:
+      - name: config-volume
+        persistentVolumeClaim:
+          claimName: prowlarr-pvc-config

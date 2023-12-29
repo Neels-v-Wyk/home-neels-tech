@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: jellyseerr-home-neels-tech-tls
+spec:
+  secretName: jellyseerr-home-neels-tech-tls
+  issuerRef:
+    name: star-home-neels-tech-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - jellyseerr.home.neels.tech
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jellyseerr
+  namespace: jellyseerr
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-to-https@kubernetescrd
+    cert-manager.io/cluster-issuer: star-home-neels-tech-issuer
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`jellyseerr.home.neels.tech`)
+      services:
+        - name: jellyseerr-tcp
+          port: 80
+  tls:
+    secretName: jellyseerr-home-neels-tech-tls

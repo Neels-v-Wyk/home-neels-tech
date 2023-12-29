@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jellyseerr
+  name: jellyseerr
+  namespace: jellyseerr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyseerr
+  template:
+    metadata:
+      labels:
+        app: jellyseerr
+    spec:
+      containers:
+        - name: jellyseerr
+          image: fallenbagel/jellyseerr:latest
+          ports:
+          - name: jellyseerr-tcp
+            containerPort: 5055
+            protocol: TCP
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Amsterdam"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config
+      volumes:
+      - name: config-volume
+        persistentVolumeClaim:
+          claimName: jellyseerr-pvc-config

@@ -1,0 +1,15 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jellyseerr-tcp
+  namespace: jellyseerr
+spec:
+  selector:
+    app: jellyseerr
+  ports:
+  - port: 80
+    targetPort: 5055
+    name: jellyseerr-tcp
+    protocol: TCP
+  type: ClusterIP

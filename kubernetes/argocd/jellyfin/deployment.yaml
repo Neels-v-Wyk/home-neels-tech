@@ -33,9 +33,9 @@ spec:
         - name: JELLYFIN_PublishedServerUrl 
           value: jellyfin.home.neels.tech
         - name: PGID
-          value: "\x36\x35\x35\x34\x31"
+          value: "1000"
         - name: PUID
-          value: "\x31\x30\x34\x34"
+          value: "1000"
         - name: TZ
           value: Europe/Amsterdam
         securityContext:

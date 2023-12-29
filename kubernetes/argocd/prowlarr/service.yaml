@@ -1,0 +1,15 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: prowlarr-tcp
+  namespace: prowlarr
+spec:
+  selector:
+    app: prowlarr
+  ports:
+  - port: 80
+    targetPort: 9696
+    name: prowlarr-tcp
+    protocol: TCP
+  type: ClusterIP

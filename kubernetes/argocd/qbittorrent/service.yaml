@@ -1,0 +1,15 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: qbittorrent-tcp
+  namespace: qbittorrent
+spec:
+  selector:
+    app: qbittorrent
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: qbittorrent-tcp
+    protocol: TCP
+  type: ClusterIP
