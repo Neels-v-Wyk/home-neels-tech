@@ -1,28 +1,19 @@
----
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: sonarr-pv-nfs-config
+  name: sonarr-pv-local-config
   namespace: sonarr
+  labels:
+    type: local
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs-csi
-  mountOptions:
-    - nfsvers=3
-    - nolock
-  csi:
-    driver: nfs.csi.k8s.io
-    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
-    # make sure this value is unique for every share in the cluster
-    volumeHandle: 192.168.0.110#nfs#kubernetes-sonarr-config
-    volumeAttributes:
-      server: 192.168.0.110
-      share: /nfs
-      subdir: kubernetes/sonarr-config
+  storageClassName: local-storage
+  hostPath:
+    path: "/mnt/kubernetes/sonarr-pv-local-config"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -30,7 +21,7 @@ metadata:
   name: sonarr-pvc-config
   namespace: sonarr
 spec:
-  volumeName: sonarr-pv-nfs-config
+  volumeName: sonarr-pv-local-config
   accessModes:
     - ReadWriteMany
   resources:
