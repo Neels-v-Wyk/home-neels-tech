@@ -23,7 +23,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`jellyfun.home.neels.tech`)
+      match: Host(`jellyfin.home.neels.tech`)
       services:
         - name: jellyfin
           port: 80
