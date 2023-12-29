@@ -40,8 +40,8 @@ spec:
     - jellyfin-dscvry
     - jellyfin-dlna
   routes:
-    - services:
-        - name: jellyfin-dlna
-          port: 1900
-        - name: jellyfin-dscvry
-          port: 7359
+    services:
+    - name: jellyfin-dlna
+      port: 1900
+    - name: jellyfin-dscvry
+      port: 7359
