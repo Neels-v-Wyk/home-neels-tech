@@ -38,7 +38,7 @@ metadata:
 spec:
   routes:
   - services:
-    - name: jellyfin-dlna
+    - name: jellyfin-udp
       port: 1900
-    - name: jellyfin-discovery
+    - name: jellyfin-udp
       port: 7359
