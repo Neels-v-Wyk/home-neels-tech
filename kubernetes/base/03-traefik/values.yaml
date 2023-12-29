@@ -34,14 +34,6 @@ ports:
     tls:
       enabled: true
       # certResolver: cloudflare
-  jellyfin-dlna:
-    port: 1900
-    expose: true
-    protocol: UDP
-  jellyfin-dscvry:
-    port: 7359
-    expose: true
-    protocol: UDP
 
 persistence:
   enabled: true

@@ -14,7 +14,7 @@ spec:
     protocol: TCP
     targetPort: 8920
   - name: https
-    port: 443
+    port: 80
     protocol: TCP
     targetPort: 8920
   - name: dlna

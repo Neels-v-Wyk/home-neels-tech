@@ -36,9 +36,6 @@ metadata:
   name: jellyfin-udp
   namespace: jellyfin
 spec:
-  entryPoints:
-    - jellyfin-dscvry
-    - jellyfin-dlna
   routes:
   - services:
     - name: jellyfin-dlna
