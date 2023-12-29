@@ -25,8 +25,8 @@ spec:
     - kind: Rule
       match: Host(`jellyfun.home.neels.tech`)
       services:
-        - name: jelllyfin
-          port: 443
+        - name: jellyfin
+          port: 80
   tls:
     secretName: jellyfin-home-neels-tech-tls
 ---
@@ -40,5 +40,5 @@ spec:
   - services:
     - name: jellyfin-dlna
       port: 1900
-    - name: jellyfin-dscvry
+    - name: jellyfin-discovery
       port: 7359
