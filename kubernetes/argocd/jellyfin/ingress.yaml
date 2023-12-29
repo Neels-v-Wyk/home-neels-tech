@@ -21,13 +21,29 @@ metadata:
 spec:
   entryPoints:
     - websecure
+  routes:
+    - kind: Rule
+      match: Host(`jellyfun.home.neels.tech`)
+      services:
+        - name: jelllyfin-server
+          port: 80
+  tls:
+    secretName: jellyfin-home-neels-tech-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: jellyfin-server-udp
+  namespace: jellyfin
+spec:
+  entryPoints:
     - jellyfin-dscvry
     - jellyfin-dlna
   routes:
     - kind: Rule
       match: Host(`jellyfun.home.neels.tech`)
-      services:
-        - name: argocd-server
-          port: 8920
-  tls:
-    secretName: jellyfin-home-neels-tech-tls
+    - services:
+        - name: jellyfin-dlna
+          port: 1900
+        - name: jellyfin-dscvry
+          port: 7359
