@@ -22,6 +22,7 @@ metadata:
   namespace: sonarr
 spec:
   volumeName: sonarr-pv-local-config
+  storageClassName: local-storage
   accessModes:
     - ReadWriteMany
   resources:
