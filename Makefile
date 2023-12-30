@@ -68,8 +68,10 @@ services: services-base services-argocd # Install services to kubernetes cluster
 #   - document node label for igpu, kernel update to linux-generic for drivers and norootsquash on nas for jellyfin share
 #   - document comicvine api key for kapowarr
 #   - document local storage for arr stack due to sqlite
+#   - move to longhorn instead of local storage
 #   - document /mnt/kubernetes nightly backup to nas
 #   - document chown -R 1000:1000 /mnt/kubernetes for config moves with regards to arr stack
+#   - document sabnzbd manual config for local network access
 
 home: vms kubernetes services # Create VMs, install kubernetes and services
 	@echo "Welcome home"

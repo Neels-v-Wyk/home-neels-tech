@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sabnzbd-pv-local-config
+  namespace: sabnzbd
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  hostPath:
+    path: "/mnt/kubernetes/sabnzbd-pv-local-config"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sabnzbd-pvc-config
+  namespace: sabnzbd
+spec:
+  volumeName: sabnzbd-pv-local-config
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sabnzbd-pv-nfs-data
+  namespace: sabnzbd
+spec:
+  capacity:
+    storage: 2Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi
+  mountOptions:
+    - nfsvers=3
+    - nolock
+  csi:
+    driver: nfs.csi.k8s.io
+    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
+    # make sure this value is unique for every share in the cluster
+    volumeHandle: 192.168.0.110#nfs#kubernetes-sabnzbd-data
+    volumeAttributes:
+      server: 192.168.0.110
+      share: /nfs
+      subdir: kubernetes/jellyfin-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sabnzbd-pvc-data
+  namespace: sabnzbd
+spec:
+  volumeName: sabnzbd-pv-nfs-data
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Ti

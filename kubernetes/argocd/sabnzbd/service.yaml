@@ -1,0 +1,15 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sabnzbd-tcp
+  namespace: sabnzbd
+spec:
+  selector:
+    app: sabnzbd
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: sabnzbd-tcp
+    protocol: TCP
+  type: ClusterIP
