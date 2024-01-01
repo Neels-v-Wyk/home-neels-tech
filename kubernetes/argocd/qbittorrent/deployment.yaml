@@ -35,7 +35,7 @@ spec:
             - name: config-volume
               mountPath: /config
             - name: data-volume
-              mountPath: /config/downloads
+              mountPath: /data
       volumes:
       - name: config-volume
         persistentVolumeClaim:

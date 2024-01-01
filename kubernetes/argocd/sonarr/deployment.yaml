@@ -36,8 +36,6 @@ spec:
               mountPath: /config
             - name: data-volume
               mountPath: /data
-            - name: downloads-volume
-              mountPath: /app/qBittorrent/downloads/ # shared download dir so sonarr can see it
       volumes:
       - name: config-volume
         persistentVolumeClaim:
@@ -45,6 +43,3 @@ spec:
       - name: data-volume
         persistentVolumeClaim:
           claimName: sonarr-pvc-data
-      - name: downloads-volume
-        persistentVolumeClaim:
-          claimName: sonarr-pvc-downloads
