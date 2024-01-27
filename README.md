@@ -8,6 +8,8 @@ This repo serves as a way to document the layout and configuration of my home in
 
 1. A `secrets.env` file filled out. Copy `example-secrets.env` for a base
 2. terraform
+3. ansible
+4. A Corpse Reviver No. 2
 
 ### Process
 Currently, all manual setup documentation can be found in `setup/`, it outlines everything you need to do to get the hosts in a usable state and assumes you are starting from scratch.
