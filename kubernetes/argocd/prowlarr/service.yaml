@@ -13,3 +13,18 @@ spec:
     name: prowlarr-tcp
     protocol: TCP
   type: ClusterIP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: flaresolverr-tcp
+  namespace: prowlarr
+spec:
+  selector:
+    app: flaresolverr
+  ports:
+  - port: 80
+    targetPort: 8191
+    name: flaresolverr-tcp
+    protocol: TCP
+  type: ClusterIP
