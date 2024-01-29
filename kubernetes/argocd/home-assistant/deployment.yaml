@@ -93,7 +93,9 @@ spec:
           privileged: true
         ports:
         - containerPort: 1883
+          name: mqtt0
         - containerPort: 9001
+          name: mqtt1
         volumeMounts:
         - mountPath: /mosquitto
           name: mosquitto
@@ -101,7 +103,6 @@ spec:
       - name: mosquitto
         persistentVolumeClaim:
           claimName: mosquitto-pvc-config
-
 # ---
 # apiVersion: apps/v1
 # kind: Deployment
