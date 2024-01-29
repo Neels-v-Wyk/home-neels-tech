@@ -40,7 +40,7 @@ spec:
     - mqtt
   routes:
     - kind: Rule
-      match: Host(`mosquitto-tcp.home.neels.tech`)
+      match: HostSNI(`*`)
       services:
         - name: mosquitto-tcp
           port: 1883
