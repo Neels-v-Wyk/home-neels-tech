@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: home-assistant
+  name: home-assistant-http
+spec:
+  selector:
+    app: home-assistant
+  type: ClusterIP
+  ports:
+  - name: home-assistant-http
+    protocol: TCP
+    port: 80
+    targetPort: 8123
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: home-assistant
+  name: zwavejs2mqtt
+spec:
+  selector:
+    app: zwavejs2mqtt
+  type: NodePort
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8091
+    targetPort: 8091
+    nodePort: 30091
+  - name: ws
+    protocol: TCP
+    port: 3000
+    targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: home-assistant
+  name: mosquitto-service
+spec:
+  selector:
+    app: mosquitto-service
+  type: NodePort
+  ports:
+  - name: mqtt
+    protocol: TCP
+    port: 1883
+    targetPort: 1883
+  - name: mqtt1
+    protocol: TCP
+    port: 9001
+    targetPort: 9001        
