@@ -94,6 +94,14 @@ spec:
         ports:
         - containerPort: 1883
         - containerPort: 9001
+        volumeMounts:
+        - mountPath: /mosquitto
+          name: mosquitto
+      volumes:
+      - name: mosquitto
+        persistentVolumeClaim:
+          claimName: mosquitto-pvc-config
+
 # ---
 # apiVersion: apps/v1
 # kind: Deployment
