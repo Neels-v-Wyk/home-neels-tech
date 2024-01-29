@@ -88,7 +88,7 @@ spec:
     spec:
       containers:
       - name: mosquitto
-        image: arm64v8/eclipse-mosquitto
+        image: eclipse-mosquitto:latest
         securityContext:
           privileged: true
         ports:
