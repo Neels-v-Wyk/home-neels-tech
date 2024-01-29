@@ -36,6 +36,8 @@ metadata:
   name: mosquitto
   namespace: home-assistant
 spec:
+  entryPoints:
+    - mqtt
   routes:
     - kind: Rule
       match: Host(`mosquitto-tcp.home.neels.tech`)

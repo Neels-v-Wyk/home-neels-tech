@@ -34,6 +34,10 @@ ports:
     tls:
       enabled: true
       # certResolver: cloudflare
+  mqtt:
+    port: 1883
+    protocol: TCP
+    expose: true
 
 persistence:
   enabled: true
