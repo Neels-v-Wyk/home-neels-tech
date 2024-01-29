@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: home-assistant-pvc-data
+  name: home-assistant-pvc-config
   namespace: home-assistant
 spec:
   volumeName: home-assistant-pv-nfs-config
