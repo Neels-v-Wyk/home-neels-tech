@@ -44,6 +44,7 @@ kubernetes-pre-setup: # Install kubernetes to VMs
 kubernetes-post-setup: kubernetes # Post setup for kubernetes
 	@echo "Post setup for kubernetes"
 	sed -i '' 's/127\.0\.0\.1/${KUBERNETES_PRIMARY_IP}/g' ansible/inventory/${KUBERNETES_CLUSTER_NAME}/artifacts/admin.conf
+	scripts/post-setup/*.sh
 
 kubernetes: clean kubernetes-pre-setup kubernetes-post-setup # Install and configure kubernetes
 	@echo "Installing and configuring kubernetes"

@@ -50,6 +50,9 @@ These servers come with windows installed, which we won't be using.
 5. Set up ZFS with all the defaults, make sure the pool name is consistent accross all three nodes
 6. Create a shared ZFS storage for all the nodes from the cluster management tab
 7. Set up your ssh key by running `ssh-copy-id -i ~/.ssh/id_rsa root@192.168.0.101` (this should copy to all nodes if it's already clustered)
+8. Install Ceph from Proxmox for distributed storage, set all nodes to monitors and managers, and use up what free space you have left in the volume group (~20GB for me) as a lv for ceph with `lvcreate -l 100%FREE -n pve/vz` followed by `ceph-volume lvm create --data pve/vz`
+    1. You might also need to run `ceph auth get client.bootstrap-osd > /var/lib/ceph/bootstrap-osd/ceph.keyring` if you encounter auth errors
+9. Add all servers as a metadata server, and create a cephfs called `k8s-local-cephfs`
 8. Create an SDN # I COULD NOT GET THIS TO WORK. The other solution is probably a router inside a virtual network to assign DHCP addresses and route to the external network. Maybe I'll revisit this
  	1. Create an evpn controller with all nodes as peers
         2. Create an evpn zone with all nodes as exit nodes and 'local routing' enabled vnet and subnet in order to allow network communication between these nodes.
