@@ -29,3 +29,16 @@ spec:
           port: 80
   tls:
     secretName: home-assistant-home-neels-tech-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: mosquitto
+  namespace: home-assistant
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`mosquitto-tcp.home.neels.tech`)
+      services:
+        - name: mosquitto-tcp
+          port: 1883
