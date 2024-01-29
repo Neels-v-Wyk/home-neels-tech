@@ -54,7 +54,7 @@ spec:
       volumes:
       - name: config
         persistentVolumeClaim:
-          claimName: home-assistant-pvc-nfs-config
+          claimName: home-assistant-pvc-config
       - name: media-volume
         hostPath:
           path: /tmp/media
