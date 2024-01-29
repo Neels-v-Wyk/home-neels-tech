@@ -20,7 +20,7 @@ metadata:
   name: mosquitto-service-tcp
 spec:
   selector:
-    app: mosquitto-service
+    app: mosquitto
   type: ClusterIP
   ports:
   - name: mqtt0
