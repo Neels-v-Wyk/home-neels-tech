@@ -12,4 +12,4 @@ cloudflared tunnel login
 cloudflared tunnel create k8s-tunnel
 ```
 
-Be sure to populate `CLOUDFLARED_TUNNEL_CREDS=/path/to/your.json` in `.env` after this, which will be consumed when deploying the k8s service for cloudflared and turned into a secret
+Be sure to populate `CLOUDFLARED_PEM=/path/to/your.pem` and `CLOUDFLARED_JSON_CREDS=/path/to/your.json` in `.env` after this, which will be consumed when deploying the k8s service for cloudflared and turned into secrets
