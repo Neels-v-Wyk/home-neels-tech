@@ -1,0 +1,95 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: frigate
+  namespace: argocd
+spec:
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+  project: default
+  source:
+    chart: frigate
+    repoURL: https://blakeblackshear.github.io/blakeshome-charts/
+    targetRevision: 7.3.0
+    helm:
+      releaseName: frigate      
+      values: |
+        ingress:
+          enabled: true
+          tls:
+          - secretName: frigate-home-neels-tech-tls
+            hosts:
+            - frigate.home.neels.tech
+          annotations:
+            cert-manager.io/cluster-issuer: star-home-neels-tech-issuer
+            traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-to-https@kubernetescrd
+          hosts:
+          - host: frigate.home.neels.tech
+            paths:
+            - /
+        env:
+          LIBVA_DRIVER_NAME: "i915" 
+        resources: 
+          requests: 
+              gpu.intel.com/i915: "1" 
+          limits: 
+              gpu.intel.com/i915: "1" 
+        config: |
+          detectors:
+            ov:
+              type: openvino
+              device: AUTO
+              model:
+                path: /openvino-model/ssdlite_mobilenet_v2.xml
+          model:
+            width: 300
+            height: 300
+            input_tensor: nhwc
+            input_pixel_format: bgr
+            labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+
+
+          mqtt:
+            host: "mqtt-tcp.home.neels.tech"
+            port: 1883
+            user: admin
+            password: ""
+            topic_prefix: frigate
+
+          detect:
+            enabled: True
+
+          objects:
+            track:
+              - person
+              - cat
+
+
+          cameras:
+            # Define at least one camera
+            kitchencam:
+              enabled: True
+              detect:
+                enabled: True
+              zones:
+                counter1:
+                  coordinates: 1280,707,1279,236,1089,216,798,645
+                  objects:
+                  - cat
+                counter2:
+                  coordinates: 666,243,650,100,1,296,0,480,24,568
+                  objects:
+                  - cat
+
+              ffmpeg:
+                # hwaccel_args: preset-vaapi
+                inputs:
+                  - path: rtsp://192.168.0.76:8554/cam
+                    roles:
+                      - detect
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: frigate

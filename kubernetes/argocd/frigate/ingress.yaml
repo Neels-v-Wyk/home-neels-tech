@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: frigate-home-neels-tech-tls
+spec:
+  secretName: frigate-home-neels-tech-tls
+  issuerRef:
+    name: star-home-neels-tech-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - frigate.home.neels.tech
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: frigate
+  namespace: frigate
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-to-https@kubernetescrd
+    cert-manager.io/cluster-issuer: star-home-neels-tech-issuer
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`frigate.home.neels.tech`)
+      services:
+        - name: frigate
+          port: 80
+  tls:
+    secretName: frigate-home-neels-tech-tls
