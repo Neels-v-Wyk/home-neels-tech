@@ -12,10 +12,10 @@ data:
     no-autoupdate: true
     # Remember, these rules route traffic from cloudflared to a local service. To route traffic
     # from the internet to cloudflared, run `cloudflared tunnel route dns <tunnel> <hostname>`.
-    # E.g. `cloudflared tunnel route dns k8s.tunnel.neels.tech k8s.tunnel.neels.tech`.
+    # E.g. `cloudflared tunnel route dns k8s-tunnel vpn.home.neels.tech`.
     ingress:
     - hostname: k8s.tunnel.neels.tech
-      service: traefik.traefik.svc.cluster.local
+      service: https://vpn.home.neels.tech
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
     # in the connection from cloudflared to your local service, not from the internet to cloudflared.
@@ -23,6 +23,6 @@ data:
       service: hello_world
     # Experimental access to the NAS
     - hostname: nas.neels.tech
-      service: $NFS_SERVER_IP
+      service: smb://192.168.0.110 # TODO: variabilize this
     # This rule matches any traffic which didn't match a previous rule, and responds with HTTP 404.
     - service: http_status:404

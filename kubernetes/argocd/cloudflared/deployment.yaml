@@ -33,10 +33,7 @@ spec:
           mountPath: /etc/cloudflared/config
           readOnly: true
         - name: json-creds
-          mountPath: /etc/cloudflared/creds
-          readOnly: true
-        - name: pem
-          mountPath: /etc/cloudflared/creds
+          mountPath: /etc/cloudflared/json-creds
           readOnly: true
       volumes:
       - name: json-creds
@@ -48,9 +45,6 @@ spec:
           # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
           # ```
           secretName: tunnel-credentials
-      - name: pem
-        secret:
-          secretName: tunnel-pem
       - name: config
         configMap:
           name: cloudflared
