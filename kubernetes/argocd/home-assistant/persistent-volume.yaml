@@ -74,3 +74,41 @@ spec:
   resources:
     requests:
       storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zigbee2mqtt-pv-nfs-config
+  namespace: home-assistant
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi
+  mountOptions:
+    - nfsvers=3
+    - nolock
+  csi:
+    driver: nfs.csi.k8s.io
+    # volumeHandle format: {nfs-server-address}#{sub-dir-name}#{share-name}
+    # make sure this value is unique for every share in the cluster
+    volumeHandle: 192.168.0.110#nfs#kubernetes-zigbee2mqtt-config
+    volumeAttributes:
+      server: 192.168.0.110
+      share: /nfs
+      subdir: kubernetes/zigbee2mqtt-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zigbee2mqtt-pvc-config
+  namespace: home-assistant
+spec:
+  volumeName: zigbee2mqtt-pv-nfs-config
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi

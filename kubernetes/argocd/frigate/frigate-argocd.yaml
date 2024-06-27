@@ -45,8 +45,8 @@ spec:
               model:
                 path: /openvino-model/ssdlite_mobilenet_v2.xml
           model:
-            width: 1080
-            height: 1920
+            width: 300
+            height: 300
             input_tensor: nhwc
             input_pixel_format: bgr
             labelmap_path: /openvino-model/coco_91cl_bkgr.txt
@@ -61,6 +61,9 @@ spec:
 
           detect:
             enabled: True
+            width: 1280 
+            height: 720
+
 
           objects:
             track:
@@ -76,11 +79,11 @@ spec:
                 enabled: True
               zones:
                 counter1:
-                  coordinates: 1280,707,1279,236,1089,216,798,645
+                  coordinates: 694,200,696,84,607,82,0,253,48,508
                   objects:
                   - cat
                 counter2:
-                  coordinates: 666,243,650,100,1,296,0,480,24,568
+                  coordinates: 1280,172,1127,161,824,536,826,595,1280,664
                   objects:
                   - cat
 

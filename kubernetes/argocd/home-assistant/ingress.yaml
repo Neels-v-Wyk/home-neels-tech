@@ -10,6 +10,19 @@ spec:
   dnsNames:
     - home-assistant.home.neels.tech
 ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: zigbee2mqtt-home-neels-tech-tls
+spec:
+  secretName: zigbee2mqtt-home-neels-tech-tls
+  issuerRef:
+    name: star-home-neels-tech-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - zigbee2mqtt.home.neels.tech
+
+---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -29,6 +42,26 @@ spec:
           port: 80
   tls:
     secretName: home-assistant-home-neels-tech-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: zigbee2mqtt
+  namespace: home-assistant
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-redirect-to-https@kubernetescrd
+    cert-manager.io/cluster-issuer: star-home-neels-tech-issuer
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`zigbee2mqtt.home.neels.tech`)
+      services:
+        - name: zigbee2mqtt-http
+          port: 80
+  tls:
+    secretName: zigbee2mqtt-home-neels-tech-tls
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
