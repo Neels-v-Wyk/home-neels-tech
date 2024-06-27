@@ -144,7 +144,7 @@ spec:
         - mountPath: /data
           name: zigbee2mqtt
         - mountPath: /dev/ttyUSB0
-          name: zigbee
+          name: usb
         - mountPath: /run/udev
           name: udev
       volumes:
