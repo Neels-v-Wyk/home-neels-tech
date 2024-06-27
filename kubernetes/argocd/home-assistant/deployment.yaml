@@ -137,6 +137,11 @@ spec:
         ports:
         - containerPort: 8080
           name: http
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - SYS_ADMIN
         volumeMounts:
         - mountPath: /data
           name: zigbee2mqtt
@@ -149,14 +154,11 @@ spec:
         persistentVolumeClaim:
           claimName: zigbee2mqtt-pvc-data
       - name: usb
-        mountPath: /dev/ttyUSB0
+        hostPath:
+          path: /dev/ttyUSB0
       - name: udev
-        mountPath: /run/udev
-        securityContext:
-          privileged: true
-          capabilities:
-            add:
-              - SYS_ADMIN
+        hostPath:
+          path: /run/udev
 # ---
 # apiVersion: apps/v1
 # kind: Deployment
