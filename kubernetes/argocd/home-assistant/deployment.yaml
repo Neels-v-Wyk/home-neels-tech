@@ -117,6 +117,8 @@ spec:
       labels:
         app: zigbee2mqtt
     spec:
+      nodeSelector:
+        zigbee: "true"
       containers:
       - image: koenkk/zigbee2mqtt:latest
         name: zigbee2mqtt
