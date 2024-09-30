@@ -79,14 +79,9 @@ spec:
                 enabled: True
               zones:
                 counter1:
-                  coordinates: 694,200,696,84,607,82,0,253,48,508
-                  objects:
-                  - cat
+                  coordinates: 731,372,736,241,54,314,75,578
                 counter2:
-                  coordinates: 1280,172,1127,161,824,536,826,595,1280,664
-                  objects:
-                  - cat
-
+                  coordinates: 1280,331,1156,329,1152,379,848,660,1280,720
               ffmpeg:
                 # hwaccel_args: preset-vaapi
                 inputs:
