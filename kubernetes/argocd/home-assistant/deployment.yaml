@@ -23,7 +23,7 @@ spec:
       #   securityContext:
       #     privileged: true
       - name: home-assistant
-        image: linuxserver/homeassistant:latest
+        image: ghcr.io/home-assistant/home-assistant:stable
         resources:
           requests:
             memory: "256Mi"
